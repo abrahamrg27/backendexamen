@@ -1,0 +1,27 @@
+using Microsoft.EntityFrameworkCore;
+
+namespace backend.Models;
+
+public class StoreContext : DbContext
+{
+    public StoreContext(DbContextOptions<StoreContext> options) : base(options)
+    {
+    }
+
+    public DbSet<Beer> Beers { get; set; }
+    public DbSet<Brand> Brands { get; set; }
+    public DbSet<Inventory> Inventories { get; set; }
+
+    public DbSet<Supplier> suppliers {get; set;}    
+
+    public DbSet <Sale> Sales {get; set;}
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Brand>()
+            .HasIndex(b => b.Name)
+            .IsUnique();
+    }
+}
